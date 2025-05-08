@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:lista_compras_mobile/configs/app_settings.dart';
 import 'package:lista_compras_mobile/models/moeda.dart';
+import 'package:lista_compras_mobile/repositories/conta_repository.dart';
+import 'package:provider/provider.dart';
 
 class CriptoMoedasDetalhes extends StatefulWidget {
   const CriptoMoedasDetalhes({
@@ -16,26 +19,38 @@ class CriptoMoedasDetalhes extends StatefulWidget {
 }
 
 class _CriptoMoedasDetalhesState extends State<CriptoMoedasDetalhes> {
-  NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
+  //NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
+  late NumberFormat real;
+  late String moeda;
   final _form = GlobalKey<FormState>();
   final _valor = TextEditingController();
   double quantidade = 0;
+  late ContaRepository conta;
 
-  comprar() {
+  readNumberFormat() {
+    final loc = context.watch<AppSettings>().locale;
+    moeda = loc['locale'] == 'pt_BR' ? 'R\$' : '\$';
+    real = NumberFormat.currency(locale: loc['locale'], name: loc['name']);
+  }
+
+  comprar() async {
     if (_form.currentState!.validate()) {
-      //Salvar a Compra
-      Navigator.pop(context);
+      // Salvar a compra
+      await conta.comprar(widget.moeda, double.parse(_valor.text));
+
+      if (!mounted) return;
+      Navigator.of(context).pop();
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Compra Realizada com Sucesso'),
-          duration: Duration(seconds: 5),
-        ),
+        const SnackBar(content: Text('Compra realizada com sucesso!')),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    readNumberFormat();
+    conta = Provider.of<ContaRepository>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.color,
@@ -96,7 +111,7 @@ class _CriptoMoedasDetalhesState extends State<CriptoMoedasDetalhes> {
                   border: OutlineInputBorder(),
                   labelText: 'Valor',
                   prefix: Text(
-                    'R\$',
+                    moeda,
                     style: TextStyle(
                       color: widget.color,
                       fontSize: 22,
@@ -109,12 +124,12 @@ class _CriptoMoedasDetalhesState extends State<CriptoMoedasDetalhes> {
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Informe o valor de Compra';
-                  } else if (double.tryParse(value) == null) {
-                    return 'Informe um valor válido';
-                  } else if (double.parse(value) <= 50) {
-                    return 'Compra minima é de R\$50,00';
+                  if (value!.isEmpty) {
+                    return 'Informe o valor da compra';
+                  } else if (double.parse(value) < 50) {
+                    return 'Compra mínima é R\$ 50,00';
+                  } else if (double.parse(value) > conta.saldo) {
+                    return 'Você não tem saldo suficiente';
                   }
                   return null;
                 },

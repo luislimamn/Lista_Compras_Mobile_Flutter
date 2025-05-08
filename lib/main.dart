@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_compras_mobile/configs/app_settings.dart';
 import 'package:lista_compras_mobile/configs/hive_config.dart';
+import 'package:lista_compras_mobile/repositories/conta_repository.dart';
 import 'package:lista_compras_mobile/repositories/favoritas_repository.dart';
 import 'package:lista_compras_mobile/telas/inoova_template.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        //ChangeNotifierProvider(create: (context) => ContaRepository()),
+        ChangeNotifierProvider(create: (context) => ContaRepository()),
         ChangeNotifierProvider(create: (context) => AppSettings()),
         ChangeNotifierProvider(create: (context) => FavoritasRepository()),
       ],

@@ -113,7 +113,8 @@ class _ListaCriptoMoedasState extends State<ListaCriptoMoedas> {
                     ),
             title: Row(
               children: [
-                if (favoritas.lista.contains(tabela[moeda]))
+                if (favoritas.lista
+                    .any((fav) => fav.sigla == tabela[moeda].sigla))
                   Icon(Icons.favorite, color: color, size: 20),
                 Text(
                   tabela[moeda].nome,

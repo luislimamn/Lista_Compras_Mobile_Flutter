@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "29462928857",
+    "project_id": "lista-de-compras-online-9fb7e",
+    "storage_bucket": "lista-de-compras-online-9fb7e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29462928857:android:aaf17b5a66c66574088dc8",
+        "android_client_info": {
+          "package_name": "com.inoova.lista_compras_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpja7BiVCuDeF8cJBx-Ja4heRlc6F3PTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29462928857:android:ad0b1b086f480288088dc8",
+        "android_client_info": {
+          "package_name": "com.semcodar.tutorialffyt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpja7BiVCuDeF8cJBx-Ja4heRlc6F3PTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lista_compras_mobile/telas/carteira_page.dart';
+import 'package:lista_compras_mobile/telas/configuracoes_page.dart';
 import 'package:lista_compras_mobile/telas/cripto_moedas_favoritas.dart';
 import 'package:lista_compras_mobile/telas/lista_cripto_moedas.dart';
 
@@ -33,10 +35,13 @@ class _CriptoMoedasState extends State<CriptoMoedas> {
         children: [
           ListaCriptoMoedas(title: 'Cripto Moedas'),
           CriptoMoedasFavoritas(title: 'Criptos Favoritas'),
+          CarteiraPage(title: 'Carteira'),
+          ConfiguracoesPage(title: 'Configurações'),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: paginaAtual,
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
@@ -45,6 +50,14 @@ class _CriptoMoedasState extends State<CriptoMoedas> {
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: 'Favoritas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet),
+            label: 'Carteira',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Configurações',
           ),
         ],
         onTap: (pagina) {
